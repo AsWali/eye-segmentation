@@ -5,7 +5,7 @@ How does the input stay the same with stride = 2 at the start ?
 What loss function is used ? Does this use paired data ? Is this supervised ?
 
 ## todo
-finish model
-build train script
+finish model <- done
+build train script <- done
 do filtering last
 rewrite code to be more nice
