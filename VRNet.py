@@ -76,6 +76,8 @@ class Enc(nn.Module):
         #using grayscale showing shape
         #torch.Size([1, 1, 320, 200])
         self.enc1=nn.Conv2d(1, 32, kernel_size=3, stride=1, padding=1)
+        # https://pytorch.org/cppdocs/api/function_namespacetorch_1_1nn_1_1init_1ac8a913c051976a3f41f20df7d6126e57.html
+        torch.nn.init.kaiming_normal_(self.enc1.weight, mode='fan_out')
         #torch.Size([1, 32, 320, 200])
         self.enc2=BottleNeck(32, 16, 1, 2)
         self.enc3=BottleNeck(16, 16, 1, 1)
@@ -194,20 +196,27 @@ class Dec(nn.Module):
         return x
 
 
+class VRNet(nn.Module):
+    def __init__(self):
+        super(VRNet, self).__init__()
+        self.Enc=Enc()
+        self.Dec=Dec()
+        
+    def forward(self, x, returns='both'):
+        
+        enc = self.Enc(x)
+        
+        if returns=='enc':
+            return enc
+        
+        dec=self.Dec(enc)
+        #dec = torch.argmax(dec, dim = 1, keepdim=True)
+        if returns=='dec':
+            return dec
+        
+        if returns=='both':
+            return enc, dec
+        
+        else:
+            raise ValueError('Invalid returns, returns must be in [enc dec both]')
 
-transform = transforms.Compose([transforms.Resize((200, 320)),
-                            transforms.ToTensor(), transforms.Grayscale(num_output_channels=1)])
-dataset = datasets.ImageFolder("data", transform=transform)
-dataloader = torch.utils.data.DataLoader(dataset, batch_size=10, shuffle=True)
-images, labels = next(iter(dataloader))
-d = images
-#d = torch.rand(1, 1, 320, 200)
-denc=Enc()
-ddec=Dec()
-e = denc(d)
-f = ddec(e)
-imgplot = plt.imshow(d[0,0,:,:])
-plt.show()
-imgplot = plt.imshow(torch.argmax(f, dim = 1).detach()[0].numpy())
-plt.show()
-print(f.shape)
