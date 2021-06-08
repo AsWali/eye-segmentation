@@ -4,6 +4,14 @@ How to merge residual if the shape is different ?
 How does the input stay the same with stride = 2 at the start ?
 What loss function is used ? Does this use paired data ? Is this supervised ?
 
+Difference code and paper:
+- Different init learning rate
+- Have to activate Swa.
+
+
+Output notes:
+input/output 1 = 1500 epochs on 1 image, no post filter used
+
 ## todo
 finish model <- done
 build train script <- done
