@@ -69,16 +69,19 @@ def main():
     if(CUDA):
         vrnet = vrnet.cuda()
     learning_rate = 0.001
-    optimizer = torch.optim.Adam(vrnet.parameters(), lr=learning_rate)
-    # https://pytorch.org/blog/stochastic-weight-averaging-in-pytorch/
-    # 51 epoch. need to caclulate how many steps that is
-    optimizer = torchcontrib.optim.SWA(optimizer, swa_start=51, swa_freq=1, swa_lr=0.0005)
+
     transform = transforms.Compose([transforms.Resize(img_size),
                                 transforms.ToTensor()])
     dataset = MyCustomDataset("data1", transform)
 
     # Train 1 image set batch size=1 and set shuffle to False
     dataloader = torch.utils.data.DataLoader(dataset, batch_size=1, shuffle=False)
+    
+    optimizer = torch.optim.Adam(vrnet.parameters(), lr=learning_rate)
+    # https://pytorch.org/blog/stochastic-weight-averaging-in-pytorch/
+    # 51 epoch. need to caclulate how many steps that is
+    steps = int(len(dataloader) / 32)
+    optimizer = torchcontrib.optim.SWA(optimizer, swa_start=51*steps, swa_freq=steps, swa_lr=learning_rate)
     # Run for every epoch
     for epoch in range(1500):
 
