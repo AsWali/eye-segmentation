@@ -15,16 +15,11 @@ torch.cuda.manual_seed(1)
 np.random.seed(1)
 
 
-def generalised_dice_loss_ce(output, target, device, n_classes=4, type_weight='simple', add_crossentropy=False):
+def generalised_dice_loss_ce(output, target, device, n_classes=4):
     n_pixel = target.numel()
     _, counts = torch.unique(target, return_counts=True)
     cls_weight = torch.div(n_pixel, n_classes * counts.type(torch.FloatTensor)).to(device)
-    if type_weight == 'square':
-        cls_weight = torch.pow(cls_weight, 2.0)
     
-    if add_crossentropy:
-        loss_entropy = F.nll_loss(torch.log(output), target, weight=cls_weight)
-
     if len(target.size()) == 3:
         # Convert to one hot encoding
         encoded_target = F.one_hot(target.to(torch.int64), num_classes=n_classes)
@@ -42,12 +37,7 @@ def generalised_dice_loss_ce(output, target, device, n_classes=4, type_weight='s
     gdl_denominator = torch.sum(torch.mul(cls_weight, union), dim=1)
     generalised_dice_score = torch.sub(1.0, 2 * gdl_numerator / gdl_denominator)
 
-    if add_crossentropy:
-        loss = 0.5 * torch.mean(generalised_dice_score) + 0.5 * loss_entropy
-    else:
-        loss = torch.mean(generalised_dice_score)
-
-    return loss
+    return torch.mean(generalised_dice_score)
 
 def train_op(model, optimizer, input, target):
     dec = model(input, returns='dec')
@@ -76,7 +66,7 @@ def main():
 
     # Train 1 image set batch size=1 and set shuffle to False
     dataloader = torch.utils.data.DataLoader(dataset, batch_size=1, shuffle=False)
-    
+
     optimizer = torch.optim.Adam(vrnet.parameters(), lr=learning_rate)
     # https://pytorch.org/blog/stochastic-weight-averaging-in-pytorch/
     # 51 epoch. need to caclulate how many steps that is
