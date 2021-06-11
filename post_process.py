@@ -3,6 +3,7 @@ import numpy as np
 from skimage.measure import label   
 import matplotlib.pyplot as plt
 import cv2
+import sys
 
 def getLargestCC(img_bw):
     labels = label(img_bw, connectivity=2, return_num=False)
@@ -12,40 +13,38 @@ def getLargestCC(img_bw):
 
 
 def filter(image):
-    image = image.numpy()
-    zeros = torch.zeros(image.shape)
+    image = image.cpu().numpy() + 1
+    orig_image = image
+    layers = []
     for i in range(1, 4):
-        x = (image <= i)
-        x = x * image
-        x = fillhole(x) 
-        bw = getLargestCC(x)
+        bw = (image == i)
+        x = fill_hole(bw[0,:,:])
+        difference_with_holes = (x == bw[0,:,:])
+        image = image * difference_with_holes
+        layers.append(x * i)
 
-        if i== 1:
-            img_1 = (bw * i)
-        elif i==2:
-            img_2 = (bw * i)
-        elif i==3:
-            img_3 = (bw * i)
-        image[zeros != 0] = 0
+    bw = (orig_image == 4)
+    x = fill_hole(bw[0,:,:])
+    difference_with_holes = (x == bw[0,:,:])
+    image = image * difference_with_holes
+    layers.append(x * 4)
 
-    zeros[img_filled_sclera > 0] = 1
-    zeros[img_filled_iris > 0] = 2
-    img_ret[img_filled_pupil > 0] = 3
-    return zeros
+    return np.argmax(layers, axis=0)
 
-def fillhole(input_image):
-    '''
-    input gray binary image  get the filled image by floodfill method
-    Note: only holes surrounded in the connected regions will be filled.
-    :param input_image:
-    :return:
-    '''
-    im_flood_fill = input_image.copy()
-    h, w = input_image[0,:,:].shape
-    mask = np.zeros((h + 2, w + 2), np.uint8)
-    im_flood_fill = im_flood_fill.astype("uint8")
-    print(im_flood_fill.shape)
-    cv2.floodFill(im_flood_fill[0,:,:], mask, (0, 0), 255)
-    im_flood_fill_inv = cv2.bitwise_not(im_flood_fill)
-    img_out =  np.bitwise_or(input_image, im_flood_fill_inv)
-    return img_out 
+np.set_printoptions(threshold=sys.maxsize)
+
+# https://www.programcreek.com/python/example/89425/cv2.floodFill
+def fill_hole(input_mask):
+    h, w = input_mask.shape
+    canvas = np.zeros((h + 2, w + 2), np.uint8)
+    canvas[1:h + 1, 1:w + 1] = input_mask.copy()
+
+    mask = np.zeros((h + 4, w + 4), np.uint8)
+
+    cv2.floodFill(canvas, mask, (0, 0), 1)
+    cv2.floodFill(canvas, mask, (0, 639), 1)
+    canvas = canvas[1:h + 1, 1:w + 1].astype(np.bool)
+    kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (9, 9))
+    dilated = cv2.dilate((~canvas | input_mask.astype(np.uint8)) , kernel)
+    eroded=cv2.erode(dilated,kernel)
+    return eroded 

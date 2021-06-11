@@ -1,5 +1,3 @@
-import os
-import argparse
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -8,15 +6,14 @@ from PIL import Image
 import matplotlib.pyplot as plt
 import torch
 from dataset import MyCustomDataset
-from torchvision import datasets, transforms
-import torchcontrib
+from torchvision import transforms
+from post_process import filter
 
 import VRNet
 import matplotlib.pyplot as plt
 
-torch.manual_seed(1)
-torch.cuda.manual_seed(1)
-np.random.seed(1)
+torch.manual_seed(79796125883900)
+torch.cuda.manual_seed(79796125883900)
 
 def main():
     model = VRNet.VRNet().cuda()
@@ -36,6 +33,9 @@ def main():
     imgplot = plt.imshow(images["image"][0,0,:,:].cpu())
     plt.show()
     imgplot = plt.imshow(torch.argmax(dec, dim = 1).cpu().detach()[0].numpy())
+    plt.show()
+    fitlered = filter(torch.argmax(dec, dim = 1))
+    imgplot = plt.imshow(fitlered)
     plt.show()
 
 if __name__ == '__main__':
