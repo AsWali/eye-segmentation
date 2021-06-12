@@ -12,6 +12,12 @@ Difference code and paper:
 Output notes:
 input/output 1 = 1500 epochs on 1 image, no post filter used
 
+Models:
+1 = just adam
+2 = adam and swa
+3 = updated model architeture by fixign typo and swa 
+
+
 ## todo
 finish model <- done
 build train script <- done

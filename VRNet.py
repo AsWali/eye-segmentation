@@ -75,11 +75,11 @@ class Enc(nn.Module):
         
         #using grayscale showing shape
         #torch.Size([1, 1, 320, 200])
-        self.enc1=nn.Conv2d(1, 32, kernel_size=3, stride=1, padding=1)
+        self.enc1=nn.Conv2d(1, 32, kernel_size=3, stride=2, padding=1)
         # https://pytorch.org/cppdocs/api/function_namespacetorch_1_1nn_1_1init_1ac8a913c051976a3f41f20df7d6126e57.html
         torch.nn.init.kaiming_normal_(self.enc1.weight, mode='fan_out')
         #torch.Size([1, 32, 320, 200])
-        self.enc2=BottleNeck(32, 16, 1, 2)
+        self.enc2=BottleNeck(32, 16, 1, 1)
         self.enc3=BottleNeck(16, 16, 1, 1)
         self.enc4=BottleNeck(16, 24, 6, 2)
         self.enc5=BottleNeck(24, 24, 6, 1)
