@@ -12,17 +12,17 @@ from post_process import filter
 import VRNet
 import matplotlib.pyplot as plt
 
-torch.manual_seed(79796125883900)
-torch.cuda.manual_seed(79796125883900)
+# torch.manual_seed(79796125883900)
+# torch.cuda.manual_seed(79796125883900)
 
 def main():
     model = VRNet.VRNet().cuda()
-    model.load_state_dict(torch.load("f_model"))
+    model.load_state_dict(torch.load("c_model2"))
     print(model)
 
     transform = transforms.Compose([transforms.Resize((320,200)),
                                 transforms.ToTensor()])
-    dataset = MyCustomDataset("data/validation", transform)
+    dataset = MyCustomDataset("data1", transform)
 
     # Train 1 image set batch size=1 and set shuffle to False
     dataloader = torch.utils.data.DataLoader(dataset, batch_size=1, shuffle=True)

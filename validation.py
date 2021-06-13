@@ -43,7 +43,7 @@ def main():
 
     transform = transforms.Compose([transforms.Resize((320,200)),
                                 transforms.ToTensor()])
-    dataset = MyCustomDataset("data/validation", transform)
+    dataset = MyCustomDataset("data1", transform)
 
     # Train 1 image set batch size=1 and set shuffle to False
     dataloader = torch.utils.data.DataLoader(dataset, batch_size=1, shuffle=True)
@@ -53,7 +53,9 @@ def main():
         print(idx)
         dec = model(images["image"].cuda(), returns='dec')
         filtered = filter(torch.argmax(dec, dim = 1))
-        iou_list.append(mean_iou(torch.from_numpy(filtered), images["mask"]))
+        iou = mean_iou(torch.argmax(dec, dim = 1), images["mask"].cuda())
+        print(iou)
+        iou_list.append(iou)
 
     print(np.mean(iou_list))
 
@@ -64,7 +66,7 @@ def main():
     plt.show()
     fitlered = filter(torch.argmax(dec, dim = 1))
     print(mean_iou(torch.from_numpy(fitlered), images["mask"]))
-    imgplot = plt.imshow(fitlered)
+    imgplot = plt.imshow(images["mask"][0])
     plt.show()
 
 if __name__ == '__main__':

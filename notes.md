@@ -16,11 +16,13 @@ Models:
 1 = just adam
 2 = adam and swa
 3 = updated model architeture by fixign typo and swa 
+4 = trained on custom dataset
 
 Validation on models:
 1 = 0.922626
 2 = 0.9115783
 3 = 0.9385028
+4 = 0.5172832
 
 ## todo
 finish model <- done
