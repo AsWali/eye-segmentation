@@ -17,6 +17,10 @@ Models:
 2 = adam and swa
 3 = updated model architeture by fixign typo and swa 
 
+Validation on models:
+1 = 0.922626
+2 = 0.9115783
+3 = 0.9385028
 
 ## todo
 finish model <- done
