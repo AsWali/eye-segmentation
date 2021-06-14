@@ -37,7 +37,7 @@ def mean_iou(pred, label, num_classes=4):
 
 def main():
     model = VRNet.VRNet().cuda()
-    model.load_state_dict(torch.load("f_model_3"))
+    model.load_state_dict(torch.load("c_model2"))
     T = count_parameters(model)
     S = np.divide(np.multiply(T, 4), np.multiply(1024, 1024))
 

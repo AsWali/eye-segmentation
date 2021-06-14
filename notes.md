@@ -16,13 +16,17 @@ Models:
 1 = just adam
 2 = adam and swa
 3 = updated model architeture by fixign typo and swa 
-4 = trained on custom dataset
+4 = trained on custom dataset 200 epochs
+5 = custom dataset 500 epochs
+6 = custom data set 1500
 
 Validation on models:
 1 = 0.922626
 2 = 0.9115783
 3 = 0.9385028
 4 = 0.5172832
+5 = 0.93217456
+6 = 0.9556759
 
 ## todo
 finish model <- done
