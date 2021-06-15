@@ -8,7 +8,7 @@ In this blog an attempt has been made to reproduce the algorithm of one of the p
 
 
 
-During the attempt to reproduce the project we used their github project. However, there were multiple problems with their github. Firstly, it did not include any documentation about which version of the packages were used. Secondly, 
+During the attempt to reproduce the project we used their github project. However, there were multiple problems with their github. Firstly, it did not include any documentation about which version of the packages were used. Secondly, when enabling the Stochastic Weighted Averaging option, as used in the paper, the training script crashehd at every fifth epoch when testing the current model with the validation set. It gave the message that the dimensions of the input were not right. Additioanally, the training script did not save the checkpoints. The script should have saved evert 25th checkpoint of the model. However, only the model at the 0th, 25th and 50th epoch were saved. Lastly, after mutiple attempt training the full 200 epochs, it did not save the model at the end. Due to time and budget limits we eventually had abandon the idea of training working modoel from scratch with their code.
 ### Markdown
 
 Markdown is a lightweight and easy-to-use syntax for styling your writing. I```markdown
