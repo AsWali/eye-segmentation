@@ -75,5 +75,4 @@ Eye Semantic Segmentation with A Lightweight Model, 3694-3697.
 
 <a id="6">[6]</a> 
 Huynh, V.T. and Kim, S. and Lee, G. and Yang, H. (2020)
-Semantic Segmentation of the Eye With a Lightweight Deep Network and Shape Correction. 
-Communications of the ACM, 11(3), 131967-131974.
+Semantic Segmentation of the Eye With a Lightweight Deep Network and Shape Correction, 131967-131974.
