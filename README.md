@@ -49,6 +49,34 @@ Having trouble with Pages? Check out our [documentation](https://docs.github.com
 
 ## References
 <a id="1">[1]</a> 
+Vitek, Matej and Rot, Peter and Štruc, Vitomir and Peer, Peter  (2020). 
+10.1007/s00521-020-04782-1 
+A Comprehensive Investigation into Sclera Biometrics: A Novel Dataset and Performance Study, 1-15.
+
+<a id="2">[2]</a> 
+Rot, Peter and Vitek, Matej, and Grm, Klemen and  Emeršič, Žiga, and Peer, Peter and  Štruc, Vitomir(2019). 
+978-3-030-27731-4
+10.1007/978-3-030-27731-4_13 
+Deep Sclera Segmentation and Recognition, 395-432.
+
+
+<a id="3">[3]</a> 
+Dijkstra, E. W. (1968). 
+Go to statement considered harmful. 
+Communications of the ACM, 11(3), 147-148.
+
+
+<a id="3">[3]</a> 
+Dijkstra, E. W. (1968). 
+Go to statement considered harmful. 
+Communications of the ACM, 11(3), 147-148.
+
+<a id="3">[3]</a> 
+Dijkstra, E. W. (1968). 
+Go to statement considered harmful. 
+Communications of the ACM, 11(3), 147-148.
+
+<a id="3">[3]</a> 
 Dijkstra, E. W. (1968). 
 Go to statement considered harmful. 
 Communications of the ACM, 11(3), 147-148.
