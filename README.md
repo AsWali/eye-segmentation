@@ -50,33 +50,30 @@ Having trouble with Pages? Check out our [documentation](https://docs.github.com
 ## References
 <a id="1">[1]</a> 
 Vitek, Matej and Rot, Peter and Štruc, Vitomir and Peer, Peter  (2020). 
-10.1007/s00521-020-04782-1 
+doi = "10.1007/s00521-020-04782-1"
 A Comprehensive Investigation into Sclera Biometrics: A Novel Dataset and Performance Study, 1-15.
 
 <a id="2">[2]</a> 
-Rot, Peter and Vitek, Matej, and Grm, Klemen and  Emeršič, Žiga, and Peer, Peter and  Štruc, Vitomir(2019). 
-978-3-030-27731-4
-10.1007/978-3-030-27731-4_13 
+Rot, Peter and Vitek, Matej, and Grm, Klemen and  Emeršič, Žiga, and Peer, Peter and  Štruc, Vitomir(2019),
+isbn = "978-3-030-27731-4",
+doi = "10.1007/978-3-030-27731-4_13",
 Deep Sclera Segmentation and Recognition, 395-432.
 
 
 <a id="3">[3]</a> 
-Dijkstra, E. W. (1968). 
-Go to statement considered harmful. 
-Communications of the ACM, 11(3), 147-148.
+Rot, Peter and Vitek, Matej, and Grm, Klemen and  Emeršič, Žiga, and Peer, Peter and  Štruc, Vitomir(2018),
+doi = "10.1109/IWOBI.2018.8464133",
+Deep Multi-class Eye Segmentation for Ocular Biometrics, 1-8.
 
+<a id="4">[4]</a> 
+Vitek, Matej and Das, Abhijit and Pourcenoux, Yann and Missler, Alexandre and Paumier, Calvin and Das, Sumanta and De Ghosh, Ishita and Lucio, Diego R. and Zanlorensi Jr., Luiz A. and Menotti, David and Boutros, Fadi and Damer, Naser and Grebe, Jonas Henry and Kuijper, Arjan and Hu, Junxing and He, Yong and Wang, Caiyong and Liu, Hongda and Wang, Yunlong and Sun, Zhenan and Osorio-Roig, Daile and Rathgeb, Christian and Busch, Christoph and Tapia Farias, Juan and Valenzuela, Andres and Zampoukis, Georgios and Tsochatzidis, Lazaros and Pratikakis, Ioannis and Nathan, Sabari and Suganya, R and Mehta, Vineet and Dhall, Abhinav and Raja, Kiran and Gupta, Gourav and Khiarak, Jalil Nourmohammadi and Akbari-Shahper, Mohsen and Jaryani, Farhang and Asgari-Chenaghlu, Meysam and Vyas, Ritesh and Dakshit, Sristi and Dakshit, Sagnik and Peer, Peter and Pal, Umapada and Štruc, Vitomir (2020),
+{SSBC} 2020: Sclera Segmentation Benchmarking Competition in the Mobile Environment.
 
-<a id="3">[3]</a> 
-Dijkstra, E. W. (1968). 
-Go to statement considered harmful. 
-Communications of the ACM, 11(3), 147-148.
+<a id="5">[5]</a> 
+Huynh, V.T. and Kim, S. and Lee, G. and Yang, H. (2019). 
+Eye Semantic Segmentation with A Lightweight Model, 3694-3697.
 
-<a id="3">[3]</a> 
-Dijkstra, E. W. (1968). 
-Go to statement considered harmful. 
-Communications of the ACM, 11(3), 147-148.
-
-<a id="3">[3]</a> 
-Dijkstra, E. W. (1968). 
-Go to statement considered harmful. 
-Communications of the ACM, 11(3), 147-148.
+<a id="6">[6]</a> 
+Huynh, V.T. and Kim, S. and Lee, G. and Yang, H. (2020)
+Semantic Segmentation of the Eye With a Lightweight Deep Network and Shape Correction. 
+Communications of the ACM, 11(3), 131967-131974.
