@@ -5,6 +5,10 @@ You can use the [editor on GitHub](https://github.com/AsWali/eye-segmentation/ed
 Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
 
 In this blog an attempt has been made to reproduce the algorithm of one of the particiting teams of the OpenEDS Semantic Segmentation challenge of 2019. The challenge uses the OpenEDS dataset, which is created by facebook. The dataset contains grey images and eye segmentation masks (.npy files).
+
+
+
+During the attempt to reproduce the project we used their github project. However, there were multiple problems with their github. Firstly, it did not include any documentation about which version of the packages were used. Secondly, 
 ### Markdown
 
 Markdown is a lightweight and easy-to-use syntax for styling your writing. I```markdown
