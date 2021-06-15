@@ -6,7 +6,7 @@ Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://j
 
 In this blog an attempt has been made to reproduce the algorithm of one of the particiting teams of the OpenEDS Semantic Segmentation challenge of 2019. The challenge uses the OpenEDS dataset, which is created by facebook. The dataset contains grey images and eye segmentation masks (.npy files).  
 The OpenEDS dataset exists out of 2.403 images with accompying mask in the validation set, 8.916 images with accompying mask in the training set, and 1.440 images with accompying mask.
-In this paper the reproducibility of the model described in the paper Eye Semantic Segmentation with A Lightweight Model[[5]](#5) is researched.
+In this paper the reproducibility of the model described in the paper Eye Semantic Segmentation with A Lightweight Model is researched[[5]](#5).
 
 
 
