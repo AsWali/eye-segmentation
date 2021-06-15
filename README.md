@@ -4,11 +4,10 @@ You can use the [editor on GitHub](https://github.com/AsWali/eye-segmentation/ed
 
 Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
 
+In this blog an attempt has been made to reproduce the algorithm of one of the particiting teams of the OpenEDS Semantic Segmentation challenge of 2019. The challenge uses the OpenEDS dataset, which is created by facebook. The dataset contains grey images and eye segmentation masks (.npy files).
 ### Markdown
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
-
-```markdown
+Markdown is a lightweight and easy-to-use syntax for styling your writing. I```markdown
 Syntax highlighted code block
 
 # Header 1
