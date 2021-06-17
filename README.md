@@ -117,7 +117,7 @@ For the openEDS dataset we got pretty close, their highest score is 0,9485 while
 
 ![image](https://github.com/AsWali/eye-segmentation/blob/main/tests/c_input2.png)
 
-![image](https://github.com/AsWali/eye-segmentation/blob/main/tests/c_output2.png)
+![image](https://raw.githubusercontent.com/AsWali/eye-segmentation/main/tests/c_output2.png?token=ACLMPHR6BYDXK3UE5ZFLEZ3A2TPNO)
 
 ![image](https://github.com/AsWali/eye-segmentation/blob/main/tests/c_output3.png)
 
