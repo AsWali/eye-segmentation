@@ -20,16 +20,16 @@ Besides the OpenEDS dataset a different dataset was used for training. The SBVI 
 When recreating the model we tried to do it in the following steps, first; We create the model, secondly we write a training script, third we write the code for the post processing and fourth we write the script that validates the model. 
 
 ### Encoder
-The structure of the model is clearly defined in the paper using figures and tables, we first looked at the encoder part of the model, which looks like this:
+The structure of the model is clearly defined in the paper using figures and tables, we first looked at the encoder part of the model, which looks like this[[5]](#5):
 
-![image](https://user-images.githubusercontent.com/9881502/122454321-8ef96b80-cfab-11eb-98a4-07edd083d1be.png)[[5]](#5)
+![image](https://user-images.githubusercontent.com/9881502/122454321-8ef96b80-cfab-11eb-98a4-07edd083d1be.png)
 
 Immediatly, a few questions arose; what does the linear after the conv 1x1 mean in the block, what are the variables t,c,n and s in the table, why does the input size not decrease when the first layer has stride 2. We first tried creating a single bottleneck block and tried to run the code with just a random torch matrix with shape (320,200). It immediatly crashed because I added an linear activation function after my conv 1x1, after doing some research having a conv 1x1 linear is the same as just doing a conv 1x1 without using a activation function. So when I removed the linear activation functiones after my conv 1x1 the bottleneck block worked. But this is without using the variables mentioned in the table, according to the table the encoder begins with a conv2d layer has 9 bottleneck blocks and ends with a conv2d layer. The n in the table corresponds to this amount of 9, we start with n=2 bottlenecks with values; t = 1, c = 16 and s = 1. After doing some research we found out what the variables ment; s is used to indicate stride, c is used to indicate the dimensions of the input and t was the expansion factor which upscales the input before downscaling it again. Using this info we chained the bottlenecks together and tried to recreate the tables input sizes. But the first conv2d has a stride of 2 while the input size stays the same, so there was an mistake, either the stride on the first conv2d should be an 1 or the input sizes are incorrect. We first assumed the first case but after contacting the authors they mentioned it was an typo in the paper and the input sizes are incorrect and it should infact shrink the input size. We trained models based on both of these changes.
 
 ### Decoder
-The figure used to denote the decoder looks like this:
+The figure [[5]](#5) used to denote the decoder looks like this:
 
-![image](https://user-images.githubusercontent.com/9881502/122454343-94ef4c80-cfab-11eb-8070-8ecca43dedb5.png)[[5]](#5)
+![image](https://user-images.githubusercontent.com/9881502/122454343-94ef4c80-cfab-11eb-8070-8ecca43dedb5.pg)
 
 On first glance, the decoder looks a lot more complicated because of all the merging involved. But the operations are very clearly defined and we didn't run into any issues while developing it. The SE Block was a known methode which we could very easily google. After developing the decoder and testing the input and output sizes using random matrices with the shapes specified in the paper, we were ready to chain the encoder and decoder together and build the training script.
 
@@ -88,9 +88,9 @@ And showing results:
 
 
 ## Validation and results
-To validate our model we created a script that looks at all files in the validation set and compares our filtered predicted mask with the groundtruth. It again uses mIoU to score the model, the results reached by the published model looks like this:
+To validate our model we created a script that looks at all files in the validation set and compares our filtered predicted mask with the groundtruth. It again uses mIoU to score the model, the results reached by the published model looks like this[[5]](#5):
 
-![image](https://user-images.githubusercontent.com/9881502/122460302-3d081400-cfb2-11eb-9d07-420c116461ed.png)[[5]](#5)
+![image](https://user-images.githubusercontent.com/9881502/122460302-3d081400-cfb2-11eb-9d07-420c116461ed.png)
 
 We will only look at the mIoU to compare accuracies.
 
@@ -123,8 +123,9 @@ For the openEDS dataset we got pretty close, their highest score is 0,9485 while
 
 The last picture is the post process filter, which goes completly wrong in this example. Due time constraint we didn't have the time to debug this issue and fix it. But this further shows that our implementation of the post process filter has a flaw in it, which also affects the accuracy reached on the openEDS validation set.
 ## Discussion
+In this blog different approaches
 ## Conslusion
-From the validation and test results it can be concluded that we succeeded in reproducing the model described in the paper. Furthermore, due to the mistakes in the code of the authors and in the paper it is relatively hard to validate the results described in their paper. This significantly affected the ability to reproduce the paper. However, it can be concluded that we sucessfully validated their approach for eye segmentation by recreating their model from scratch as well as possible.
+From the validation and test results it can be concluded that we succeeded in reproducing the model described in the paper. Furthermore, due to the mistakes in the code of the authors and in the paper it is relatively hard to validate the results described in their paper. This significantly affected the ability to reproduce the paper. However, it can be concluded that we sucessfully validated their approach for eye segmentation by recreating their model from scratch as well as possible. Furthermore, we researched the possiblity of creating our own dataset using an available dataset. This was succcesfully done by combining the ground truths of the SVPI dataset.
 ## References
 <a id="1">[1]</a> 
 Vitek, Matej and Rot, Peter and Štruc, Vitomir and Peer, Peter  (2020). 
