@@ -90,7 +90,7 @@ And showing results:
 ## Validation and results
 To validate our model we created a script that looks at all files in the validation set and compares our filtered predicted mask with the groundtruth. It again uses mIoU to score the model, the results reached by the published model looks like this:
 
-![image](https://user-images.githubusercontent.com/9881502/122460302-3d081400-cfb2-11eb-9d07-420c116461ed.png)
+![image](https://user-images.githubusercontent.com/9881502/122460302-3d081400-cfb2-11eb-9d07-420c116461ed.png)[[5]](#5)
 
 We will only look at the mIoU to compare accuracies.
 
