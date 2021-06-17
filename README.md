@@ -22,14 +22,14 @@ When recreating the model we tried to do it in the following steps, first; We cr
 ### Encoder
 The structure of the model is clearly defined in the paper using figures and tables, we first looked at the encoder part of the model, which looks like this:
 
-![image](https://user-images.githubusercontent.com/9881502/122454321-8ef96b80-cfab-11eb-98a4-07edd083d1be.png)
+![image](https://user-images.githubusercontent.com/9881502/122454321-8ef96b80-cfab-11eb-98a4-07edd083d1be.png)[[5]](#5)
 
 Immediatly, a few questions arose; what does the linear after the conv 1x1 mean in the block, what are the variables t,c,n and s in the table, why does the input size not decrease when the first layer has stride 2. We first tried creating a single bottleneck block and tried to run the code with just a random torch matrix with shape (320,200). It immediatly crashed because I added an linear activation function after my conv 1x1, after doing some research having a conv 1x1 linear is the same as just doing a conv 1x1 without using a activation function. So when I removed the linear activation functiones after my conv 1x1 the bottleneck block worked. But this is without using the variables mentioned in the table, according to the table the encoder begins with a conv2d layer has 9 bottleneck blocks and ends with a conv2d layer. The n in the table corresponds to this amount of 9, we start with n=2 bottlenecks with values; t = 1, c = 16 and s = 1. After doing some research we found out what the variables ment; s is used to indicate stride, c is used to indicate the dimensions of the input and t was the expansion factor which upscales the input before downscaling it again. Using this info we chained the bottlenecks together and tried to recreate the tables input sizes. But the first conv2d has a stride of 2 while the input size stays the same, so there was an mistake, either the stride on the first conv2d should be an 1 or the input sizes are incorrect. We first assumed the first case but after contacting the authors they mentioned it was an typo in the paper and the input sizes are incorrect and it should infact shrink the input size. We trained models based on both of these changes.
 
 ### Decoder
 The figure used to denote the decoder looks like this:
 
-![image](https://user-images.githubusercontent.com/9881502/122454343-94ef4c80-cfab-11eb-8070-8ecca43dedb5.png)
+![image](https://user-images.githubusercontent.com/9881502/122454343-94ef4c80-cfab-11eb-8070-8ecca43dedb5.png)[[5]](#5)
 
 On first glance, the decoder looks a lot more complicated because of all the merging involved. But the operations are very clearly defined and we didn't run into any issues while developing it. The SE Block was a known methode which we could very easily google. After developing the decoder and testing the input and output sizes using random matrices with the shapes specified in the paper, we were ready to chain the encoder and decoder together and build the training script.
 
@@ -61,7 +61,7 @@ adding this and the loss function made it possible to train the model and get go
 ## Post processing; Heuristic filtering
 The algorithm to process the output of the decoder is provided:
 
-![image](https://user-images.githubusercontent.com/9881502/122459323-172e3f80-cfb1-11eb-8f03-aa1c1e11b34d.png)
+![image](https://user-images.githubusercontent.com/9881502/122459323-172e3f80-cfb1-11eb-8f03-aa1c1e11b34d.png)[[5]](#5)
 
 The algorithm uses the predicted mask and runs through all classes and fills in the gaps, and updates the location of the gaps in the predicted mask so it gets ignored in the upper classes. So if the predicted mask labels a piece of the background as iris, the gap will be filled while looking at the background and the predicted mask will be updated aswell. The part causing us trouble was the sentence "Fill all black holes", with no clear way of how to excatly do this. We ended up using cv2 floodfill and eroding the edges of the images to fill in the holes. It works pretty well but probably not as good as what they used. Our code to fill in the holes looks like this, the input is the BW of the corresponding class:
 ```python
@@ -104,7 +104,7 @@ In total we trained 6 models:
 5. SBVI, 500 epochs
 6. SBVI, 1500 epochs
 
-for the SBVI we didn't have a validation set since our data was limited, so we scored the accuracy on the training set.
+For the SBVI dataset we didn't have a validation set since our data was limited, so we scored the accuracy on the training set. However, it should be carefully noticed that this causes overfitting on the dataset which results in higher mIoU accuracies.
 The accuracies reached for the models were as follows:
 1. 0.922626 
 2. 0.9115783 
