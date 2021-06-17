@@ -15,16 +15,9 @@ class MyCustomDataset(Dataset):
         npy_path = img_path.replace('images', 'labels').replace('png', 'npy')
 
         img = Image.open(img_path)
-        if img.mode == 'RGB':
-            img = img.convert('L')
+        npy = np.load(npy_path, allow_pickle=False)
 
-        if 'test' in img_path:
-            npy = np.array([])
-        else:
-            npy = np.load(npy_path, allow_pickle=False)
-
-        img_name = img_path.replace('\\', '/').split('/')[-1][:-4]
-        sample = {'image': img, 'mask': npy, 'name': img_name}
+        sample = {'image': img, 'mask': npy}
         if self.transform:
             sample["image"] = self.transform(img)
 
