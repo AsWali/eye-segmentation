@@ -82,9 +82,9 @@ def fill_hole(input_mask):
 ```
 And showing results:
 
-![image](https://github.com/AsWali/eye-segmentation/blob/main/tests/output3.png)
+![image](https://raw.githubusercontent.com/AsWali/eye-segmentation/main/tests/output3.png?token=ACLMPHXNIR6XP6CFOELCTWDA2TPSU)
 
-![image](https://github.com/AsWali/eye-segmentation/blob/main/tests/filtered_output3.png)
+![image](https://raw.githubusercontent.com/AsWali/eye-segmentation/main/tests/filtered_output3.png?token=ACLMPHT7CZVZG54P3U5ZMI3A2TPTY)
 
 
 ## Validation and results
@@ -115,11 +115,11 @@ The accuracies reached for the models were as follows:
 
 For the openEDS dataset we got pretty close, their highest score is 0,9485 while ours is 0,9385. This change is high likely because of their post process filter, it's probably more sufficted than ours and works better. The accuracies reached on our own dataset increased a lot based on the epochs, it did learn the images and we even used an image of an eye from wikipedia and this was the result:
 
-![image](https://github.com/AsWali/eye-segmentation/blob/main/tests/c_input2.png)
+![image](https://raw.githubusercontent.com/AsWali/eye-segmentation/main/tests/c_input2.png?token=ACLMPHXEVQRDIF4DJON3O33A2TPRQ)
 
 ![image](https://raw.githubusercontent.com/AsWali/eye-segmentation/main/tests/c_output2.png?token=ACLMPHR6BYDXK3UE5ZFLEZ3A2TPNO)
 
-![image](https://github.com/AsWali/eye-segmentation/blob/main/tests/c_output3.png)
+![image](https://raw.githubusercontent.com/AsWali/eye-segmentation/main/tests/c_output3.png?token=ACLMPHQVZQ6TZTBT3ACUUJDA2TPQO)
 
 The last picture is the post process filter, which goes completly wrong in this example. Due time constraint we didn't have the time to debug this issue and fix it. But this further shows that our implementation of the post process filter has a flaw in it, which also affects the accuracy reached on the openEDS validation set.
 
