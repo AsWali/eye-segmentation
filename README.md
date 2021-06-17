@@ -1,51 +1,30 @@
-## Welcome to GitHub Pages
-
-You can use the [editor on GitHub](https://github.com/AsWali/eye-segmentation/edit/main/README.md) to maintain and preview the content for your website in Markdown files.
-
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+## Introduction and goal
 
 In this blog an attempt has been made to reproduce the algorithm of one of the particiting teams of the OpenEDS Semantic Segmentation challenge of 2019. The challenge uses the OpenEDS dataset, which is created by facebook. The dataset contains grey images and eye segmentation masks (.npy files).  
-The OpenEDS dataset exists out of 2.403 images with accompying mask in the validation set, 8.916 images with accompying mask in the training set, and 1.440 images with accompying mask.
-In this paper the reproducibility of the model described in the paper Eye Semantic Segmentation with A Lightweight Model is researched[[5]](#5).
+The OpenEDS dataset exists out of 2.403 images with accompying mask in the validation set, 8.916 images with accompying mask in the training set, and 1.440 test images with accompying mask. In this paper the reproducibility of the model described in the paper Eye Semantic Segmentation with A Lightweight Model is researched[[5]](#5).
+
+We tried to reconstruct their model using only published paper and through asking questions to the authors if we were ever stuck on an mather. Our goal was to do three things;
+1. Recreate their model using only the paper
+2. Use their Model uploaded to github and see if we get the same results
+3. Create a new dataset and train our own model on it
+
+First we will briefly talk about point 2 and 3 and then go a little more in depth for point 1.
+
+## Using their model
+During the attempt to reproduce the project we used their github project. However, there were multiple issues we had with their uploaded code. Firstly, it did not include any documentation about which version of the packages were used. Secondly, when enabling the Stochastic Weighted Averaging option, as used in the paper, the training script crashed at every fifth epoch when testing the current model with the validation set. The most probably cause for this is that the authors cloned an official torch package and modified it to match their model, this is nowhere mentioned and the additional code is not provided. It gave the message that the dimensions of the input were not right. Additionally, the training script did not save the checkpoints. The script should have saved evert 25th checkpoint of the model. However, only the model at the 0th, 25th and 50th epoch were saved. Lastly, after multiple attempts training the full 200 epochs, it did not save the model at the end. Due to time and budget limits we eventually had to abandon the idea of training a working model from scratch with their code.
+
+## Creating a new dataset
+Besides the OpenEDS dataset a different dataset was used for training. The SBVI dataset contains a mask for the sclera, pupil and iris of 3000x1700 colour images of eyes[[1]](#1),[[2]](#2),[[3]](#3),[[4]](#4). This image was resized to the dimensions 400x640 and converted to grey scale. Futhermore, the images that contained the masks of the three different classes were combined, resized and converted to the correct format for the masks (.npy). This resulted in 122 images with an accompanying mask. These images and maks were flipped to generate a total of 244 images that we could use to train our model.
+
+## Reproducing the model
+When recreating the model we tried to do it in the following steps, first; We create the model, secondly we write a training script, third we write the code for the post processing and fourth we write the script that validates the model. The structure of the model is clearly defined in the paper using figures and tables, we first looked at the encoder part of the model, which looks like this:
+![image](https://user-images.githubusercontent.com/9881502/122454321-8ef96b80-cfab-11eb-98a4-07edd083d1be.png)
+Immediatly, a few questions arose; what does the linear after the conv 1x1 mean in the block, what are the variables t,c,n and s in the table, why does the input size not decrease when the first layer has stride 2. We first tried creating a single bottleneck block and tried to run the code with just a random torch matrix with shape (320,200). It immediatly crashed because I added an linear activation function after my conv 1x1, after doing some research having a conv 1x1 linear is the same as just doing a conv 1x1 without using a activation function. So when I removed the linear activation functiones after my conv 1x1 the bottleneck block worked. But this is without using the variables mentioned in the table, according to the table the encoder begins with a conv2d layer has 9 bottleneck blocks and ends with a conv2d layer. The n in the table corresponds to this amount of 9, we start with n=2 bottlenecks with values; t = 1, c = 16 and s = 1. After doing some research we found out what the variables ment; s is used to indicate stride, c is used to indicate the dimensions of the input and t was the expansion factor which upscales the input before downscaling it again. 
 
 
+![image](https://user-images.githubusercontent.com/9881502/122454343-94ef4c80-cfab-11eb-8070-8ecca43dedb5.png)
 
 
-
-During the attempt to reproduce the project we used their github project. However, there were multiple problems with their github. Firstly, it did not include any documentation about which version of the packages were used. Secondly, when enabling the Stochastic Weighted Averaging option, as used in the paper, the training script crashehd at every fifth epoch when testing the current model with the validation set. It gave the message that the dimensions of the input were not right. Additioanally, the training script did not save the checkpoints. The script should have saved evert 25th checkpoint of the model. However, only the model at the 0th, 25th and 50th epoch were saved. Lastly, after multiple attempts training the full 200 epochs, it did not save the model at the end. Due to time and budget limits we eventually had to abandon the idea of training a working model from scratch with their code.
-
-Besides the OpenEDS dataset a different dataset was used for training. The SBVI dataset contains a mask for the sclera, pupil and iris of 3000x1700 colour images of eyes[[1]](#1),[[2]](#2),[[3]](#3),[[4]](#4). This image was resized to the dimensions 400x640 and converted to grey scale. Futhermore, the images that contained the masks of the three different classes were combined, resized and converted to the correct format for the masks (.npy). This resulted in 122 images with an accompanying mask. These images and maks were flipped to generate a total of 244 images that were used for training, validation and testing.
-### Markdown
-
-Markdown is a lightweight and easy-to-use syntax for styling your writing. I```markdown
-Syntax highlighted code block
-
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
-```
-
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/AsWali/eye-segmentation/settings/pages). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.
-```
-"...the **go to** statement should be abolished..." [[1]](#1).
 
 ## References
 <a id="1">[1]</a> 
