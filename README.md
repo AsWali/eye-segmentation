@@ -122,8 +122,9 @@ For the openEDS dataset we got pretty close, their highest score is 0,9485 while
 ![image](https://raw.githubusercontent.com/AsWali/eye-segmentation/main/tests/c_output3.png?token=ACLMPHQVZQ6TZTBT3ACUUJDA2TPQO)
 
 The last picture is the post process filter, which goes completly wrong in this example. Due time constraint we didn't have the time to debug this issue and fix it. But this further shows that our implementation of the post process filter has a flaw in it, which also affects the accuracy reached on the openEDS validation set.
-
-
+## Discussion
+## Conslusion
+From the validation and test results it can be concluded that we succeeded in reproducing the model described in the paper. Furthermore, due to the mistakes in the code of the authors and in the paper it is relatively hard to validate the results described in their paper. This significantly affected the ability to reproduce the paper. However, it can be concluded that we sucessfully validated their approach for eye segmentation by recreating their model from scratch as well as possible.
 ## References
 <a id="1">[1]</a> 
 Vitek, Matej and Rot, Peter and Štruc, Vitomir and Peer, Peter  (2020). 
