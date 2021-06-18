@@ -96,7 +96,7 @@ While the equation used to do the evaluation looks like this:
 
 ![image](https://user-images.githubusercontent.com/9881502/122557594-48ece800-d03d-11eb-94c9-2549feb9ade2.png)
 
-This was hard to understand, there was an magic number 50 in the equation. Comparing our trainable params to the one in the paper we also got different results(three times as large), so we looked into their code and didn't find a piece of code that calculates that part, they only calculate the mIoU. Hence, we decided to only look at the mIoU to evaluate the accuracy.
+This was hard to understand, there was an magic number 50 in the equation. Comparing our trainable params to the one in the paper we also got different results(three times as large). Due to time constraint we couldn't really find the root problem of this, we do have a strong feeling it has something to do with the depthwise separable convolutions. Our code works and we implemented it the way the paper specified it, but there must be something we didn't see. But looking at their code they don't use the trainable parms for the evaluation, they only calculate the mIoU. Hence, we decided to only look at the mIoU to evaluate the accuracy.
 
 Validation on models: 
 
