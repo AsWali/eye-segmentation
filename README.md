@@ -29,7 +29,7 @@ Immediately, a few questions arose; what does the linear after the conv 1x1 mean
 ### Decoder
 The figure [[5]](#5) used to denote the decoder looks like this:
 
-![image](https://user-images.githubusercontent.com/9881502/122454343-94ef4c80-cfab-11eb-8070-8ecca43dedb5.pg)
+![image](https://user-images.githubusercontent.com/9881502/122454343-94ef4c80-cfab-11eb-8070-8ecca43dedb5.png)
 
 At first glance, the decoder looks a lot more complicated because of all the merging involved. However, the operations are very clearly defined and we did not run into any issues while developing it. The SE Block was a known method that was easy to look up on Google. After developing the decoder and testing the input and output sizes using random matrices with the shapes specified in the paper, we were ready to chain the encoder and decoder together and build the training script.
 
@@ -63,10 +63,7 @@ The algorithm to process the output of the decoder is provided:
 
 ![image](https://user-images.githubusercontent.com/9881502/122459323-172e3f80-cfb1-11eb-8f03-aa1c1e11b34d.png)[[5]](#5)
 
-The algorithm uses the predicted mask and runs through all classes and fills in the gaps, and updates the location of the gaps in the predicted mask, which means it gets ignored in the upper classes.
-#### Deze zin klopt niet.
-Thus, if the predicted mask labels a piece of the background as iris, the gap will be filled while looking at the background and the predicted mask will be updated as well. 
-####
+The algorithm uses the predicted mask and goes through all classes, filling in the holes, and updating the location of the gaps in the predicted mask, which means it gets ignored in the upper classes. So, for example, lets say a part of the background gets classified as 'iris', the algorithm will see that there is a gap in the segmentation of the background and overwrite this to background.
 The part that caused us trouble was the sentence "Fill all black holes", with no clear way described on how to exactly perform this. We ended up using cv2 floodfill and eroding the edges of the images to fill in the holes[[5]](#5). It works pretty well but probably not as good as what they used. Our code to fill in the holes looks like this, the input is the BW of the corresponding class:
 ```python
 def fill_hole(input_mask):
@@ -93,11 +90,13 @@ The results are:
 
 ## Validation and results
 To validate our model we created a script that looks at all files in the validation set and compares our filtered predicted mask with the ground truth. It again uses mIoU to score the model, the results reached by the published model look like this[[5]](#5):
-
 ![image](https://user-images.githubusercontent.com/9881502/122460302-3d081400-cfb2-11eb-9d07-420c116461ed.png)
 
-We will only look at the mIoU to compare accuracies.
-### Why use mIoU? Explain it
+While the equation used to do the evaluation looks like this:
+
+![image](https://user-images.githubusercontent.com/9881502/122557594-48ece800-d03d-11eb-94c9-2549feb9ade2.png)
+
+This was hard to understand, there was an magic number 50 in the equation. Comparing our trainable params to the one in the paper we also got different results(three times as large), so we looked into their code and didn't find a piece of code that calculates that part, they only calculate the mIoU. Hence, we decided to only look at the mIoU to evaluate the accuracy.
 
 Validation on models: 
 
@@ -119,7 +118,7 @@ The mIoU accuracies reached for the models were as follows:
 5. 0.93217456 
 6. 0.9556759
 
-Looking at the results for the OpenEDS dataset, it can be concluded we got rather close to the mIoU accuracy of the paper. Their highest score is 0,9485 while ours is 0,9385. This change is highly likely because of their post-process filter, which is probably more #######sufficted Wat betekent dit woord? ##### than ours and has higher performance. The accuracies reached on our own dataset increased a lot based on the epochs, it did learn the images and we even used an image of an eye from Wikipedia and this was the result:
+Looking at the results for the OpenEDS dataset, it can be concluded we got rather close to the mIoU accuracy of the paper. Their highest score is 0,9485 while ours is 0,9385. This change is highly likely because of their post-process filter, which is probably more sophisticated than ours and has higher performance. The accuracies reached on our own dataset increased a lot based on the epochs, it did learn the images and we even used an image of an eye from Wikipedia and this was the result:
 
 ![image](https://raw.githubusercontent.com/AsWali/eye-segmentation/main/tests/c_input2.png?token=ACLMPHXEVQRDIF4DJON3O33A2TPRQ)
 
@@ -133,8 +132,10 @@ The last picture shows the post-process filter, which goes completely wrong in t
 In this blog, different attempts were discussed to check the reproducibility of the paper. Due to the paper being incomplete and missing elaboration on aspects as pre-processing. Furthermore, because the source code was broken and due to budget and time constraints, we could not check if the exact same results could be achieved when using their code to train from scratch. Additionally, in this blog, the results are shared of our own implementation of their model. It may not be an exact match of the model of the authors, but it is still quite similar. It is shown that we came relatively close to the mIoU accuracies described in the paper[[5]](#5).
 
 Lastly, this paper showed that we created our own custom dataset using the SBPI dataset. Due to the limited amount of masks available, this only resulted in 122 images with ground truths. By the use of the data augmentation method of flipping, we doubled the dataset to 244 images. However, due to the small size of the dataset, we did not have a validation set and used the training set as a validation set. However, it should be noticed that this often results in overfitting on the data, resulting in exceptionally high accuracies compared to when it would be verified by using unseen images with ground truths from the same distribution.
+
 ## Conslusion
 From the validation and test results, it can be concluded that we succeeded in reproducing the model described in the paper. Furthermore, due to the mistakes in the code of the authors and in the paper, it is relatively hard to validate the results described in their paper. This significantly affected the ability to reproduce the paper. However, it can be concluded that we successfully validated their approach for eye segmentation by recreating their model from scratch as similar as possible. Furthermore, we researched the possibility of creating our own dataset using an available dataset. This was successfully done by combining the ground truths of the SVPI dataset.
+
 ## References
 <a id="1">[1]</a> 
 Vitek, Matej and Rot, Peter and Štruc, Vitomir and Peer, Peter  (2020). 
