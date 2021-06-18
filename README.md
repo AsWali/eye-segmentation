@@ -1,6 +1,6 @@
 ## Introduction and goal
 
-In this blog, an attempt has been made to reproduce the algorithm of one of the participating teams of the OpenEDS Semantic Segmentation challenge of 2019. The challenge uses the OpenEDS dataset, which is created by Facebook. The dataset contains grey images and eye segmentation masks (.npy files).  These segmentaiton masks contain the sclera, pupil, iris and background.
+In this blog, an attempt has been made to reproduce the algorithm of one of the participating teams of the OpenEDS Semantic Segmentation challenge of 2019. The challenge uses the OpenEDS dataset, which is created by Facebook. The dataset contains greyscale images and eye segmentation masks (.npy files).  These segmentaiton masks contain the sclera, pupil, iris and background.
 The OpenEDS dataset exists out of 2.403 images with the accompanying mask in the validation set, 8.916 images with the accompanying mask in the training set, and 1.440 test images with the accompanying mask. In this paper, the reproducibility of the model described in the paper "Eye Semantic Segmentation with A Lightweight Model" is researched[[5]](#5).
 
 We tried to reconstruct their model using only their published paper and through asking questions to the authors if we were ever stuck on a mather. Our goal was to do three things:
