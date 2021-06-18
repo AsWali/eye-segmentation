@@ -104,7 +104,7 @@ In total we trained 6 models:
 5. SBVI, 500 epochs
 6. SBVI, 1500 epochs
 
-For the SBVI dataset we didn't have a validation set since our data was limited, so we scored the accuracy on the training set. However, it should be carefully noticed that this causes overfitting on the dataset which results in higher mIoU accuracies.
+For the SBVI dataset we didn't have a validation set since our data was limited, so we scored the accuracy on the training set. However, it should be carefully noticed that this causes overfitting on the dataset which results in higher mIoU accuracies compared to when it would be verified by using unseen images with ground truths from the same distribution.
 The accuracies reached for the models were as follows:
 1. 0.922626 
 2. 0.9115783 
